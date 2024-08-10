@@ -8,7 +8,7 @@ const Header = () => {
             <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
                 <a className="block text-primary" href="#">
                     <span className="sr-only">Home</span>
-                    <Image src={'/icons/logo.svg'} width={50} height={50}/>
+                    <Image src={'/icons/icon.svg'} width={50} height={50}/>
                 </a>
 
                 <div className="flex flex-1 items-center justify-end md:justify-between">
