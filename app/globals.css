@@ -2,14 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
+*,
+::after,
+::before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
+
+* {
+    scroll-behavior: smooth;
+}
+
+/* html {
+    scroll-behavior: smooth;
+} */
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer components {
+  .container {
+      @apply px-5 mx-auto
+  }
+
+  .ele-center {
+      @apply flex justify-center items-center
+  }
+
+  .ele-center-col {
+      @apply flex justify-center items-center flex-col
+  }
+
+  .main-btn {
+      @apply bg-primary hover:bg-[#81d6e1] transition-all duration-300 py-4 px-3 text-white flex justify-center items-center rounded-lg gap-2
   }
 }
