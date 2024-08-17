@@ -13,7 +13,7 @@ const ProductsSection = () => {
 
     console.log('products', products)
 
-    if (loading) return <LoadingSpinner/>;
+    if (loading) return <LoadingSpinner full/>;
     if (error) return <div>Error in products</div>;
 
     return (

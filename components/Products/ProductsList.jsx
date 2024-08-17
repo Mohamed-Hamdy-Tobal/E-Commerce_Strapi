@@ -9,7 +9,7 @@ export const ProductsList = ({ products }) => {
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
                 {products.map((product) => (
                     <Link
-                        key={product.id}
+                        key={product?.id}
                         href={`/product-details/${product.id}`}
                     >
                         <ProductItem

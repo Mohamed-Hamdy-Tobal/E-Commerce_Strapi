@@ -19,7 +19,7 @@ const ProductDetailsSection = ({ productId }) => {
 
     return (
         <div className='py-10'>
-            <BreadCrump />
+            <BreadCrump productID={product?.id} />
             <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5">
                 <ProductBanner banner={product.attributes.banner.data.attributes.url} />
                 <ProductInfo

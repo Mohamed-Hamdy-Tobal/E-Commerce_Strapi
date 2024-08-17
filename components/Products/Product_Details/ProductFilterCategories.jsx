@@ -11,7 +11,7 @@ export const ProductFilterCategories = ({ category }) => {
     console.log('products_category', products_category)
 
     return (
-        products_category && (
+        products_category?.length > 0 && (
             <>
                 <div className='mt-24'>
                     <h2 className='text-xl mb-6'>Similar Products</h2>
