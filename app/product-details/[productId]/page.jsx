@@ -8,7 +8,7 @@ const ProductDetails = ({ params }) => {
     return (
         <div className='product-details-page'>
             <div
-                class="container"
+                className="container"
             >
                 <ProductDetailsSection productId={params?.productId} />
             </div>

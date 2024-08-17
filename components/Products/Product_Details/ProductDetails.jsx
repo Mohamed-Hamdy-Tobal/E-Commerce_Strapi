@@ -6,6 +6,7 @@ import LoadingSpinner from '../../Loading/LoadingSpinner';
 import { BreadCrump } from '@/components/ui/BreadCrump';
 import { ProductBanner } from './ProductBanner';
 import { ProductInfo } from './ProductInfo';
+import { ProductFilterCategories } from './ProductFilterCategories';
 
 const ProductDetailsSection = ({ productId }) => {
 
@@ -31,6 +32,7 @@ const ProductDetailsSection = ({ productId }) => {
                     whatIncluded={product?.attributes?.whatIncluded}
                 />
             </div>
+            <ProductFilterCategories category={product?.attributes?.Category}/>
         </div>
     )
 }

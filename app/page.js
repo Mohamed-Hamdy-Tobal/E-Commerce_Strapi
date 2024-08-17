@@ -6,7 +6,7 @@ export default function Home() {
     <main className="">
       <Hero/>
       <div
-        class="container"
+        className="container"
       >
         <ProductsSection/>
       </div>
