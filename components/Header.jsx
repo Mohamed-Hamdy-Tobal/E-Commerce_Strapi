@@ -1,15 +1,30 @@
+'use client'
+import { UserButton, useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { usePathname } from 'next/navigation'
+import { ShoppingCart } from 'lucide-react'
 
 const Header = () => {
+
+    const user = useUser()
+    console.log("User:", user)
+
+    const pathname = usePathname()
+
+    // Check if the current route is sign-in or sign-up
+    if ((pathname === '/sign-in' || pathname === '/sign-up') && !user.isSignedIn) {
+        return null
+    }
+
     return (
         <header className="bg-white shadow-sm">
             <div className="container">
                 <div className="flex h-16 max-w-screen-xl items-center gap-8">
                     <a className="block text-primary" href="#">
                         <span className="sr-only">Home</span>
-                        <Image src={'/icons/icon.svg'} width={50} height={50}/>
+                        <Image src={'/icons/icon.svg'} width={50} height={50} />
                     </a>
 
                     <div className="flex flex-1 items-center justify-end md:justify-between">
@@ -39,21 +54,28 @@ const Header = () => {
                         </nav>
 
                         <div className="flex items-center gap-4">
-                            <div className="sm:flex sm:gap-4">
-                                <Link
-                                    className="block rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#07ccc9]"
-                                    href="/login"
-                                >
-                                    Login
-                                </Link>
+                            {user.isSignedIn ? (
+                                <div className='flex items-center gap-5'>
+                                    <Link href={'/cart'} className='flex items-center gap-1'><ShoppingCart/> <span>(0)</span></Link>
+                                    <UserButton afterSignOutUrl='/'/>
+                                </div>
+                            ) : (
+                                <div className="sm:flex sm:gap-4">
+                                    <Link
+                                        className="block rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#07ccc9]"
+                                        href="/sign-in"
+                                    >
+                                        Login
+                                    </Link>
 
-                                <Link
-                                    className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-primary transition hover:text-primary/75 sm:block"
-                                    href="/register"
-                                >
-                                    Register
-                                </Link>
-                            </div>
+                                    <Link
+                                        className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-primary transition hover:text-primary/75 sm:block"
+                                        href="/sign-up"
+                                    >
+                                        Register
+                                    </Link>
+                                </div>
+                            )}
 
                             <button
                                 className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden"
