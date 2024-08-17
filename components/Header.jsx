@@ -56,7 +56,9 @@ const Header = () => {
                         <div className="flex items-center gap-4">
                             {user.isSignedIn ? (
                                 <div className='flex items-center gap-5'>
-                                    <Link href={'/cart'} className='flex items-center gap-1'><ShoppingCart/> <span>(0)</span></Link>
+                                    <Link href={'/cart'} className='flex items-center gap-1'>
+                                        <ShoppingCart/> <span>(0)</span>
+                                    </Link>
                                     <UserButton afterSignOutUrl='/'/>
                                 </div>
                             ) : (

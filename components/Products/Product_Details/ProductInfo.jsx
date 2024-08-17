@@ -1,4 +1,8 @@
+"use client"
+
+import { useUser } from '@clerk/nextjs'
 import { AlertOctagon, BadgeCheck, ShoppingCart } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export const ProductInfo = ({
@@ -9,6 +13,18 @@ export const ProductInfo = ({
     price,
     whatIncluded,
 }) => {
+
+    const user = useUser()
+    const router = useRouter()
+
+    const handleAddToCart = () => {
+        if (!user.isSignedIn) {
+            router.push("/sign-in")
+        } else {
+            console.log("Add to cart")
+        }
+    }
+
     return (
         <div className=''>
             <h1 className='text-[25px] font-bold'>{title}</h1>
@@ -28,7 +44,7 @@ export const ProductInfo = ({
                 )}
             </div>
             <p className="text-[32px] font-semibold text-primary mt-3">${price}</p>
-            <button className="main-btn mt-3">
+            <button onClick={handleAddToCart} className="main-btn mt-3">
                 <ShoppingCart /> <span>Add To Cart</span>
             </button>
         </div>
