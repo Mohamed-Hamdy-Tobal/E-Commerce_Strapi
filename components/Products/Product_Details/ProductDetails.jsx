@@ -24,6 +24,7 @@ const ProductDetailsSection = ({ productId }) => {
                 <ProductBanner banner={product.attributes.banner.data.attributes.url} />
                 <ProductInfo
                     key={product.id}
+                    id={product?.id}
                     title={product?.attributes?.title}
                     category={product?.attributes?.Category}
                     description={product?.attributes?.description[0]?.children[0]?.text}
