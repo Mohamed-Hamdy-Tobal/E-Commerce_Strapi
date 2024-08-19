@@ -1,18 +1,20 @@
 import api from '@/lib/api';
 import { useState, useEffect } from 'react';
 
-const useProductByCategory = (category) => {
+const useCartProducts = (email) => {
 
-    // console.log("category:", category)
+    // console.log("email:", email)
 
-    const [products_category, setProduct] = useState(null);
+    const [products_cart, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await api.get(`/api/products?filters[Category][$eq]=${category}&populate=*`);
+                // const response = await api.get(`/api/carts`);
+                const response = await api.get(`/api/carts?populate[products][populate]=banner&filters[email][$eq]=${email}`);
+                console.log("response:",response)
                 setProduct(response.data.data);
             } catch (err) {
                 setError(err);
@@ -21,12 +23,12 @@ const useProductByCategory = (category) => {
             }
         };
 
-        if (category) {
+        if (email) {
             fetchProduct();
         }
-    }, [category]);
+    }, [email]);
 
-    return { products_category, loading, error };
+    return { products_cart, loading, error };
 };
 
-export default useProductByCategory;
+export default useCartProducts;

@@ -1,12 +1,18 @@
-import { useState } from 'react'
+"use client"
+import { useContext, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import api from '@/lib/api'
+import { CartProvider } from '@/context/components/CartProvider'
 
-export const useCart = () => {
+export const useCart = ({product}) => {
+
+    const {cart, setCart} = useContext(CartProvider)
+
     const { user } = useUser()
     const [isLoading, setIsLoading] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
     const [isError, setIsError] = useState(false)
+    const [data, setData] = useState(null)
 
     const handleClose = () => {
         setIsError(false)
@@ -29,7 +35,17 @@ export const useCart = () => {
         try {
             const response = await api.post('/api/carts', formData)
             console.log("Response cart:", response)
+            setData(response.data.data)
             setIsSuccess(true)
+
+            setCart(oldCart => [
+                ...oldCart,
+                {
+                    id:response.data.data.id,
+                    product
+                }
+            ])
+
             return response.data
         } catch (error) {
             setIsLoading(false)
@@ -41,5 +57,5 @@ export const useCart = () => {
         }
     }
 
-    return { addToCart, handleClose, isLoading, isSuccess, isError }
+    return { addToCart, handleClose, isLoading, isSuccess, isError, data }
 }

@@ -4,11 +4,11 @@ import { ProductsList } from '../ProductsList';
 
 export const ProductFilterCategories = ({ category }) => {
 
-    console.log("category:", category)
+    // console.log("category:", category)
 
     const { products_category } = useProductByCategory(category);
 
-    console.log('products_category', products_category)
+    // console.log('products_category', products_category)
 
     return (
         products_category?.length > 0 && (

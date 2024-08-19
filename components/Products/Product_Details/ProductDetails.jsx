@@ -12,7 +12,7 @@ const ProductDetailsSection = ({ productId }) => {
 
     const { product, loading, error } = useProductById(productId);
 
-    console.log('product', product)
+    // console.log('product', product)
 
     if (loading) return <LoadingSpinner />;
     if (error) return <div>Error in product</div>;

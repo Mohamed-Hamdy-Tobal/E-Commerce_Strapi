@@ -2,14 +2,15 @@
 import { UserButton, useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useContext } from 'react'
 import { usePathname } from 'next/navigation'
 import { ShoppingCart } from 'lucide-react'
+import { CartProvider } from '@/context/components/CartProvider'
 
 const Header = () => {
 
     const user = useUser()
-    console.log("User:", user)
+    // console.log("User:", user)
 
     const pathname = usePathname()
 
@@ -17,6 +18,10 @@ const Header = () => {
     if ((pathname === '/sign-in' || pathname === '/sign-up') && !user.isSignedIn) {
         return null
     }
+
+    const {cart, setCart} = useContext(CartProvider)
+
+    console.log('cart:',cart)
 
     return (
         <header className="bg-white shadow-sm">
@@ -57,7 +62,7 @@ const Header = () => {
                             {user.isSignedIn ? (
                                 <div className='flex items-center gap-5'>
                                     <Link href={'/cart'} className='flex items-center gap-1'>
-                                        <ShoppingCart/> <span>(0)</span>
+                                        <ShoppingCart/> <span>({cart.length})</span>
                                     </Link>
                                     <UserButton afterSignOutUrl='/'/>
                                 </div>

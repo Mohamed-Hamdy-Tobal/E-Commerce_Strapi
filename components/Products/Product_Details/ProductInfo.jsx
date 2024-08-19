@@ -18,10 +18,20 @@ export const ProductInfo = ({
     whatIncluded,
 }) => {
 
+    const product = {
+        id,
+        title,
+        category,
+        description,
+        isInstanceDelivery,
+        price,
+        whatIncluded,
+    }
+
     const user = useUser()
     const router = useRouter()
 
-    const { addToCart, isLoading, isError, isSuccess, handleClose } = useCart()
+    const { addToCart, isLoading, isError, isSuccess, handleClose } = useCart({product})
 
     const handleAddToCart = async () => {
         if (!user.isSignedIn) {
@@ -40,16 +50,16 @@ export const ProductInfo = ({
     return (
         <div className=''>
             {isSuccess && (
-                <SuccessAlert 
-                    title="Success!" 
-                    message="Product added to cart successfully!" 
-                    onClose={handleClose} 
+                <SuccessAlert
+                    title="Success!"
+                    message="Product added to cart successfully!"
+                    onClose={handleClose}
                 />
             )}
             {isError && (
                 <ErrorAlert
-                    message="Product not added to cart!" 
-                    onClose={handleClose} 
+                    message="Product not added to cart!"
+                    onClose={handleClose}
                 />
             )}
             <h1 className='text-[25px] font-bold'>{title}</h1>
