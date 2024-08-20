@@ -11,6 +11,8 @@ const RootContext = ({ children }) => {
 
   const { products_cart } = useCartProducts(userEmail);
 
+  console.log("products_cart:",products_cart)
+
   const [cart, setCart] = useState([]);
 
   useEffect(() => {

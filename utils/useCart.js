@@ -4,9 +4,9 @@ import { useUser } from '@clerk/nextjs'
 import api from '@/lib/api'
 import { CartProvider } from '@/context/components/CartProvider'
 
-export const useCart = ({product}) => {
+export const useCart = ({ product }) => {
 
-    const {cart, setCart} = useContext(CartProvider)
+    const { cart, setCart } = useContext(CartProvider)
 
     const { user } = useUser()
     const [isLoading, setIsLoading] = useState(false)
@@ -30,22 +30,34 @@ export const useCart = ({product}) => {
             }
         }
 
-        console.log("formData:", formData)
+        // console.log("formData:", formData)
 
         try {
             const response = await api.post('/api/carts', formData)
-            console.log("Response cart:", response)
+            // console.log("Response cart:", response)
             setData(response.data.data)
             setIsSuccess(true)
 
-            setCart(oldCart => [
-                ...oldCart,
-                {
-                    id:response.data.data.id,
-                    product
-                }
-            ])
+            // Fetch the product details based on the response ID
+            try {
 
+                const productResponse = await api.get(`/api/carts/${response.data.data.id}?populate[products][populate]=banner&filters[email][$eq]=${response.data.data.attributes.email}`)
+                // console.log("productResponse:", productResponse)
+                const fetchedProduct = productResponse.data.data.attributes.products.data[0].attributes
+
+                setCart(oldCart => [
+                    ...oldCart,
+                    {
+                        id: response.data.data.id,
+                        product: fetchedProduct
+                    }
+                ])
+
+            } catch (err) {
+                console.log(err)
+                setIsError(true)
+                return Promise.reject(err)
+            }
             return response.data
         } catch (error) {
             setIsLoading(false)

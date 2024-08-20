@@ -31,12 +31,12 @@ export const Cart = ({setOpenCart}) => {
             </button>
 
             {cart?.length > 0 ? (
-                <div className="mt-[45px] space-y-6">
+                <div className="mt-[45px] space-y-6 flex flex-col justify-between min-h-[220px]">
                     <ul className="space-y-6">
                         {cart?.map((item, index) => (
                             <li key={index} className="flex items-center gap-4">
                                 <Image
-                                    src={item.product.banner.data.attributes.url}
+                                    src={item?.product?.banner?.data?.attributes?.url}
                                     width={400}
                                     height={400}
                                     alt="product"
@@ -50,12 +50,12 @@ export const Cart = ({setOpenCart}) => {
                                         <dl className="mt-0.5 space-y-px text-[10px] text-gray-600">
                                             <div>
                                                 <dt className="inline">Category:</dt>
-                                                <dd className="inline">{item.product.Category}</dd>
+                                                <dd className="inline">{item?.product?.Category}</dd>
                                             </div>
 
                                             <div>
                                                 <dt className="inline">Size:</dt>
-                                                <dd className="inline">{item.product.price}</dd>
+                                                <dd className="inline">{item?.product?.price}</dd>
                                             </div>
                                         </dl>
                                     </div>
@@ -98,7 +98,7 @@ export const Cart = ({setOpenCart}) => {
 
                     </ul>
 
-                    <div className="space-y-4 text-center">
+                    <div className="text-center space-y-4">
                         <Link
                             href={'/cart'}
                             className="block rounded border border-gray-600 px-5 py-3 text-sm text-gray-600 transition hover:ring-1 hover:ring-gray-400"
