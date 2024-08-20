@@ -19,29 +19,50 @@
 } */
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
 }
 
+/* Define scrollbar styles */
+::-webkit-scrollbar {
+    width: 10px;
+    background: #fcfcfcee;
+    /* Width of the scrollbar */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #08d9d6;
+    border-radius: 5px;
+    /* Color of the scrollbar handle */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #09bdbb;
+    /* Color of the scrollbar handle on hover */
+}
+
+
 @layer components {
-  .container {
-      @apply px-5 mx-auto
-  }
+    .container {
+        @apply px-5 mx-auto
+    }
 
-  .ele-center {
-      @apply flex justify-center items-center
-  }
+    .ele-center {
+        @apply flex justify-center items-center
+    }
 
-  .ele-center-col {
-      @apply flex justify-center items-center flex-col
-  }
+    .ele-center-col {
+        @apply flex justify-center items-center flex-col
+    }
 
-  .main-btn {
-      @apply bg-primary hover:bg-[#81d6e1] transition-all duration-300 py-4 px-3 text-white flex justify-center items-center rounded-lg gap-2
-  }
+    .main-btn {
+        @apply bg-primary hover:bg-[#81d6e1] transition-all duration-300 py-4 px-3 text-white flex justify-center items-center rounded-lg gap-2
+    }
 }
 
 .cl-userButtonPopoverFooter, .cl-internal-1dauvpw, .cl-internal-1dauvpw {

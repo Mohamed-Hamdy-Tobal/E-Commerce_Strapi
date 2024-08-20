@@ -2,10 +2,11 @@
 import { UserButton, useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { ShoppingCart } from 'lucide-react'
 import { CartProvider } from '@/context/components/CartProvider'
+import { Cart } from './Cart/Cart'
 
 const Header = () => {
 
@@ -21,7 +22,14 @@ const Header = () => {
 
     const {cart, setCart} = useContext(CartProvider)
 
+    const [openCart, setOpenCart] = useState(false)
+
     console.log('cart:',cart)
+
+    // Close the cart when the pathname changes
+    useEffect(() => {
+        setOpenCart(false)
+    }, [pathname])
 
     return (
         <header className="bg-white shadow-sm">
@@ -58,13 +66,14 @@ const Header = () => {
                             </ul>
                         </nav>
 
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-4 relative">
                             {user.isSignedIn ? (
                                 <div className='flex items-center gap-5'>
-                                    <Link href={'/cart'} className='flex items-center gap-1'>
+                                    <span className='flex items-center gap-1 cursor-pointer' onClick={() => {setOpenCart((prev) => !prev)}}>
                                         <ShoppingCart/> <span>({cart.length})</span>
-                                    </Link>
+                                    </span>
                                     <UserButton afterSignOutUrl='/'/>
+                                    {openCart && <Cart setOpenCart={setOpenCart}/>}
                                 </div>
                             ) : (
                                 <div className="sm:flex sm:gap-4">
