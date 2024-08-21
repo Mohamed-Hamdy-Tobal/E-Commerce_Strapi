@@ -6,22 +6,43 @@ import { CartSectionList } from './CartSectionList'
 
 export const CartSectionPage = () => {
 
-    const { cart, setCart } = useContext(CartProvider)
+    const { cart } = useContext(CartProvider)
 
-    console.log("cart section:", cart)
+    // Group products by their id and sum up quantities
+    const groupedCart = cart.reduce((acc, item) => {
+        const productId = item.product.id;
+
+        if (!acc[productId]) {
+            acc[productId] = {
+                product: item.product,
+                quantity: 0,
+                cartItemIds: []  // Array to store the root ids
+            };
+        }
+
+        acc[productId].quantity += 1;
+        acc[productId].cartItemIds.push(item.id);  // Store the root id
+
+        return acc;
+    }, {});
+
+    // Convert the grouped cart into an array
+    const finalCart = Object.values(groupedCart);
+
+    console.log('finalCart:', finalCart);
 
     return (
         <section>
             <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
 
-                {cart?.length > 0 ? (
+                {finalCart?.length > 0 ? (
                     <div className="mx-auto max-w-3xl">
                         <header className="text-center">
                             <h1 className="text-xl font-bold text-gray-900 sm:text-3xl">Your Cart</h1>
                         </header>
 
                         <div className="mt-8">
-                            <CartSectionList />
+                            <CartSectionList cart={finalCart} />
 
                             <div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
                                 <div className="w-screen max-w-lg space-y-4">

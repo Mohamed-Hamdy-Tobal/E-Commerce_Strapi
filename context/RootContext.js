@@ -20,7 +20,7 @@ const RootContext = ({ children }) => {
       setCart((prevCart) => {
         const newCart = products_cart?.map(product => ({
           id: product.id,
-          product: product.attributes.products.data[0].attributes,
+          product: {...product.attributes.products.data[0].attributes, id:product.attributes.products.data[0].id},
         }));
 
         return [...prevCart, ...newCart];

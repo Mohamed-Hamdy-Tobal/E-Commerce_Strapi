@@ -1,12 +1,9 @@
-import { CartProvider } from '@/context/components/CartProvider'
 import Image from 'next/image'
 import React, { useContext } from 'react'
-import { EmptyCart } from './EmptyCart'
-import Link from 'next/link'
 
-export const CartSectionList = ({ setOpenCart }) => {
+export const CartSectionList = ({ cart }) => {
 
-    const { cart, setCart } = useContext(CartProvider)
+    console.log("CartSectionList:", cart)
 
     return (
 
@@ -46,9 +43,10 @@ export const CartSectionList = ({ setOpenCart }) => {
                                     <input
                                         type="number"
                                         min="1"
-                                        value="1"
-                                        id="Line1Qty"
+                                        value={item.quantity}
+                                        id={`Line1Qty-${index}`}
                                         className="h-8 w-12 rounded border-gray-200 bg-gray-50 p-0 text-center text-xs text-gray-600 [-moz-appearance:_textfield] focus:outline-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
+                                        readOnly
                                     />
                                 </form>
 

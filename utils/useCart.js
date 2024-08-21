@@ -42,14 +42,17 @@ export const useCart = ({ product }) => {
             try {
 
                 const productResponse = await api.get(`/api/carts/${response.data.data.id}?populate[products][populate]=banner&filters[email][$eq]=${response.data.data.attributes.email}`)
-                // console.log("productResponse:", productResponse)
                 const fetchedProduct = productResponse.data.data.attributes.products.data[0].attributes
+                console.log("productResponse:", productResponse)
+                const myProWithId = {...fetchedProduct, id:productResponse.data.data.attributes.products.data[0].id}
+                console.log("fetchedProduct:", myProWithId)
+
 
                 setCart(oldCart => [
                     ...oldCart,
                     {
                         id: response.data.data.id,
-                        product: fetchedProduct
+                        product: myProWithId
                     }
                 ])
 
