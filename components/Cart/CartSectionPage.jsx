@@ -8,99 +8,55 @@ export const CartSectionPage = () => {
 
     const { cart } = useContext(CartProvider)
 
-    // Group products by their id and sum up quantities
-    const groupedCart = cart.reduce((acc, item) => {
-        const productId = item.product.id;
+    // Calculate the total number of items in the cart
+    const totalPrice = cart?.reduce((total, item) => total + item?.product?.price, 0).toFixed(2);
 
-        if (!acc[productId]) {
-            acc[productId] = {
-                product: item.product,
-                quantity: 0,
-                cartItemIds: []  // Array to store the root ids
-            };
-        }
-
-        acc[productId].quantity += 1;
-        acc[productId].cartItemIds.push(item.id);  // Store the root id
-
-        return acc;
-    }, {});
-
-    // Convert the grouped cart into an array
-    const finalCart = Object.values(groupedCart);
-
-    console.log('finalCart:', finalCart);
+    const handleCheckout = () => {
+        console.log("CHECK OUT!", totalPrice)
+    }
 
     return (
         <section>
             <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
 
-                {finalCart?.length > 0 ? (
+                {cart?.length > 0 ? (
                     <div className="mx-auto max-w-3xl">
                         <header className="text-center">
                             <h1 className="text-xl font-bold text-gray-900 sm:text-3xl">Your Cart</h1>
                         </header>
 
                         <div className="mt-8">
-                            <CartSectionList cart={finalCart} />
+                            <CartSectionList cart={cart} />
 
                             <div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
-                                <div className="w-screen max-w-lg space-y-4">
+                                <div className="w-screen max-w-lg space-y-6">
                                     <dl className="space-y-0.5 text-sm text-gray-700">
-                                        <div className="flex justify-between">
-                                            <dt>Subtotal</dt>
-                                            <dd>£250</dd>
-                                        </div>
-
-                                        <div className="flex justify-between">
-                                            <dt>VAT</dt>
-                                            <dd>£25</dd>
-                                        </div>
-
-                                        <div className="flex justify-between">
-                                            <dt>Discount</dt>
-                                            <dd>-£20</dd>
-                                        </div>
 
                                         <div className="flex justify-between !text-base font-medium">
                                             <dt>Total</dt>
-                                            <dd>£200</dd>
+                                            <dd>£{totalPrice}</dd>
                                         </div>
                                     </dl>
 
                                     <div className="flex justify-end">
-                                        <span
-                                            className="inline-flex items-center justify-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-indigo-700"
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                strokeWidth="1.5"
-                                                stroke="currentColor"
-                                                className="-ms-1 me-1.5 size-4"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
-                                                />
-                                            </svg>
-
-                                            <p className="whitespace-nowrap text-xs">2 Discounts Applied</p>
-                                        </span>
-                                    </div>
-
-                                    <div className="flex justify-end">
-                                        <a
-                                            href="#"
+                                        <button
+                                            onClick={handleCheckout}
                                             className="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
                                         >
                                             Checkout
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+
+                            {/* <h1 className='text-gray-400 text-[14px] mt-5'>Note: All items will be send via Email</h1> */}
+                            <span className="relative flex justify-center mt-6">
+                                <div
+                                    className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-75"
+                                ></div>
+
+                                <span className="relative z-10 bg-white px-6">Note: All items will be send via Email</span>
+                            </span>
                         </div>
                     </div>
                 ) : <EmptyCart page />}

@@ -1,13 +1,36 @@
+import { useCartDelete } from '@/utils/useCartDelete'
 import Image from 'next/image'
 import React, { useContext } from 'react'
+import { SuccessAlert } from '../ui/SuccessAlert'
+import { ErrorAlert } from '../ui/ErrorAlert'
 
 export const CartSectionList = ({ cart }) => {
 
     console.log("CartSectionList:", cart)
 
+    const { deleteFromCart, handleClose, isSuccess, isError } = useCartDelete()
+
+    const handleDeleteProduct = (pro_id) => {
+        console.log("DELETE PRODUCT!", pro_id)
+        deleteFromCart(pro_id)
+    }
+
     return (
 
         <div className="space-y-6">
+            {isSuccess && (
+                <SuccessAlert
+                    title="Success!"
+                    message="Product deleted from cart successfully!"
+                    onClose={handleClose}
+                />
+            )}
+            {isError && (
+                <ErrorAlert
+                    message="Product not deleted from cart!"
+                    onClose={handleClose}
+                />
+            )}
             <ul className="space-y-6">
                 {cart?.map((item, index) => (
                     <li key={index} className="flex items-center gap-4">
@@ -25,32 +48,17 @@ export const CartSectionList = ({ cart }) => {
 
                                 <dl className="mt-0.5 space-y-px text-[10px] text-gray-600">
                                     <div>
-                                        <dt className="inline">Category:</dt>
+                                        <dt className="inline">Category : </dt>
                                         <dd className="inline">{item?.product.Category}</dd>
                                     </div>
 
-                                    <div>
-                                        <dt className="inline">Size:</dt>
-                                        <dd className="inline">{item?.product.price}</dd>
-                                    </div>
                                 </dl>
                             </div>
 
                             <div className="flex flex-1 items-center justify-end gap-2">
-                                <form>
-                                    <label htmlFor="Line1Qty" className="sr-only"> Quantity </label>
+                                <span className='text-[#555] font-medium text-[18px]'>{item?.product.price}</span>
 
-                                    <input
-                                        type="number"
-                                        min="1"
-                                        value={item.quantity}
-                                        id={`Line1Qty-${index}`}
-                                        className="h-8 w-12 rounded border-gray-200 bg-gray-50 p-0 text-center text-xs text-gray-600 [-moz-appearance:_textfield] focus:outline-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
-                                        readOnly
-                                    />
-                                </form>
-
-                                <button className="text-gray-600 transition hover:text-red-600">
+                                <button onClick={() => { handleDeleteProduct(item.id) }} className="text-gray-600 transition hover:text-red-600 disabled:text-gray-200">
                                     <span className="sr-only">Remove item</span>
 
                                     <svg
