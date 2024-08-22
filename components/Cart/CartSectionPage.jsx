@@ -3,8 +3,11 @@ import { CartProvider } from '@/context/components/CartProvider'
 import React, { useContext } from 'react'
 import { EmptyCart } from './EmptyCart'
 import { CartSectionList } from './CartSectionList'
+import { useRouter } from 'next/navigation'
 
 export const CartSectionPage = () => {
+
+    const router = useRouter()
 
     const { cart } = useContext(CartProvider)
 
@@ -13,6 +16,8 @@ export const CartSectionPage = () => {
 
     const handleCheckout = () => {
         console.log("CHECK OUT!", totalPrice)
+        router.push("/checkout")
+        localStorage.setItem("totalPrice",totalPrice)
     }
 
     return (

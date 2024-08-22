@@ -1,9 +1,9 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import Head from "next/head";
 import { ClerkProvider } from "@clerk/nextjs";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import RootContext from "@/context/RootContext";
 
 const roboto = Roboto({ subsets: ["latin"], weight: '700' });

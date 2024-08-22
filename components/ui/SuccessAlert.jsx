@@ -17,7 +17,7 @@ export const SuccessAlert = ({ title, message, duration = 5000, onClose }) => {
     if (!visible) return null
 
     return (
-        <div className="fixed top-3 right-3 z-50 w-full h-auto flex justify-end">
+        <div className="fixed top-[70px] right-3 z-50 w-full h-auto flex justify-end">
             <div role="alert" className="rounded-xl border border-gray-100 bg-white p-4 w-fit">
                 <div className="flex items-start gap-4">
                     <span className="text-green-600">

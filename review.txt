@@ -5,3 +5,5 @@
         - Strapi     => For Backend API And Dashboard
         - Cloudinary => For Upload Images, give me 25GB
         - Clerk => Clerk manages the full session lifecycle, including critical security functionality like active device monitoring and session revocation.
+        - Stripe => Payment Gatway
+        - Resent.com => For Resend Email
