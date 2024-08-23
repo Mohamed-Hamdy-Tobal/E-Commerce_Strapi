@@ -1,14 +1,10 @@
 "use client"
-import { CartProvider } from '@/context/components/CartProvider';
 import { useOrders } from '@/utils/useOrders';
-import { useUser } from '@clerk/nextjs';
 import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
-const CheckoutForm = ({amount}) => {
+const CheckoutForm = ({ amount }) => {
 
-    const { cart, setCart } = useContext(CartProvider)
-    const user = useUser()
 
     const stripe = useStripe();
     const elements = useElements();
@@ -31,17 +27,12 @@ const CheckoutForm = ({amount}) => {
             method: "POST",
         });
     }
-    
+
     const handleSubmit = async (event) => {
-        handleAddOrder()
-        sendEmail()
-        // We don't want to let default form submission happen here,
-        // which would refresh the page.
+
         event.preventDefault();
 
         if (!stripe || !elements) {
-            // Stripe.js hasn't yet loaded.
-            // Make sure to disable form submission until Stripe.js has loaded.
             return;
         }
 
@@ -74,10 +65,13 @@ const CheckoutForm = ({amount}) => {
         const clientSecret = await res.json(); // Extract JSON data only once
 
         console.log("res:", clientSecret); // Log the parsed JSON
-    
+
+        if (res) {
+            handleAddOrder()
+            sendEmail()
+        }
 
         const result = await stripe.confirmPayment({
-            //`Elements` instance that was used to create the Payment Element
             clientSecret,
             elements,
             confirmParams: {
@@ -86,7 +80,6 @@ const CheckoutForm = ({amount}) => {
         });
 
         if (result.error) {
-            // Show error to your customer (for example, payment details incomplete)
             console.log(result.error.message);
         } else {
             console.log("Good Payment!")

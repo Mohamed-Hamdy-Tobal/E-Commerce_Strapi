@@ -1,7 +1,9 @@
 import * as React from 'react';
+import { CustomEmail } from './CustomEmail';
 
-export const EmailTemplate = () => (
+// The Template Only Return HTML , if i want to add dynamic data, pass it by params
+export const EmailTemplate = ({user}) => (
     <div>
-        <h1>Welcome</h1>
+        <CustomEmail user={user}/>
     </div>
-);
+)

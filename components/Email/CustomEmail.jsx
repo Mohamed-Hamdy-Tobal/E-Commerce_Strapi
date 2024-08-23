@@ -1,4 +1,3 @@
-import { useUser } from "@clerk/nextjs";
 import {
     Body,
     Button,
@@ -14,49 +13,44 @@ import {
 import * as React from "react";
 
 
-export const CustomEmail = () => {
-
-    const { user } = useUser()
-
-    return (
-        <Html>
-            <Head />
-            <Preview>
-                The sales intelligence platform that helps you uncover qualified leads.
-            </Preview>
-            <Body style={main}>
-                <Container style={container}>
-                    <Img
-                        src={'/icons/icon.svg'}
-                        width="170"
-                        height="50"
-                        alt="Koala"
-                        style={logo}
-                    />
-                    <Text style={paragraph}>Hi {user.fullName},</Text>
-                    <Text style={paragraph}>
-                        Welcome to E-Commerce, the sales intelligence platform that helps you
-                        uncover qualified leads and close deals faster.
-                    </Text>
-                    <Section style={btnContainer}>
-                        <Button style={button} href="https://getkoala.com">
-                            Get started
-                        </Button>
-                    </Section>
-                    <Text style={paragraph}>
-                        Best,
-                        <br />
-                        Mohamed Tobal
-                    </Text>
-                    <Hr style={hr} />
-                    <Text style={footer}>
-                        470 Noor Ave STE B #1148, South San Francisco, CA 94080
-                    </Text>
-                </Container>
-            </Body>
-        </Html>
-    );
-}
+export const CustomEmail = ({ user }) => (
+    <Html>
+        <Head />
+        <Preview>
+            The sales intelligence platform that helps you uncover qualified leads.
+        </Preview>
+        <Body style={main}>
+            <Container style={container}>
+                <Img
+                    src={'https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg'}
+                    width="170"
+                    height="170"
+                    alt="img"
+                    style={logo}
+                />
+                <Text style={paragraph}>Hi {user.firstName},</Text>
+                <Text style={paragraph}>
+                    Welcome to E-Commerce, the sales intelligence platform that helps you
+                    uncover qualified leads and close deals faster.
+                </Text>
+                <Section style={btnContainer}>
+                    <Button style={button} href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210215160315/FREE-Python-Course-For-Beginners.png">
+                        Download
+                    </Button>
+                </Section>
+                <Text style={paragraph}>
+                    Best,
+                    <br />
+                    Mohamed Tobal
+                </Text>
+                <Hr style={hr} />
+                <Text style={footer}>
+                    470 Noor Ave STE B #1148, South San Francisco, CA 94080
+                </Text>
+            </Container>
+        </Body>
+    </Html>
+);
 
 const main = {
     backgroundColor: "#ffffff",
