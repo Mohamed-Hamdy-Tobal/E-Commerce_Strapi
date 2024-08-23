@@ -2,7 +2,11 @@ import { EmailTemplate } from '@/components/Email/email-template';
 import { Resend } from 'resend';
 import { currentUser } from '@clerk/nextjs/server'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend;
+if (typeof window === 'undefined') {  // Ensure it's only initialized on the server
+  resend = new Resend(process.env.RESEND_API_KEY);
+}
+
 
 export async function POST() {
 
@@ -11,6 +15,8 @@ export async function POST() {
     const userEmail = user.emailAddresses[0].emailAddress
 
     console.log("SEND EMAIL!")
+
+    console.log(process.env.RESEND_API_KEY)
     
 
     try {
