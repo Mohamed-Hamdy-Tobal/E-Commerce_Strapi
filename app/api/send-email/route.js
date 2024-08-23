@@ -4,7 +4,7 @@ import { currentUser } from '@clerk/nextjs/server'
 
 let resend;
 if (typeof window === 'undefined') {  // Ensure it's only initialized on the server
-  resend = new Resend(process.env.RESEND_API_KEY);
+    resend = new Resend(process.env.RESEND_API_KEY);
 }
 
 
