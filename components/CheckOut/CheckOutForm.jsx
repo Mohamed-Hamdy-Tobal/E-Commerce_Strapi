@@ -23,10 +23,17 @@ const CheckoutForm = ({ amount }) => {
     }
 
     const sendEmail = async () => {
-        const res = await fetch("api/send-email", {
-            method: "POST",
-        });
-    }
+        try {
+            const res = await fetch("api/send-email", {
+                method: "POST",
+            });
+            if (!res.ok) {
+                throw new Error('Failed to send email');
+            }
+        } catch (error) {
+            console.error("Failed to send email", error);
+        }
+    };
 
     const handleSubmit = async (event) => {
 
@@ -36,54 +43,62 @@ const CheckoutForm = ({ amount }) => {
             return;
         }
 
+        setLoading(true);
+
         const handleError = (error) => {
             setLoading(false)
             setErrorMessage(error.message)
         }
 
-        const { error: submitError } = await elements.submit()
-        if (submitError) {
-            handleError(submitError)
-            return
-        }
-
-        const res = await fetch("api/create-intent", {
-            method: "POST",
-            body: JSON.stringify({
-                amount: amount,
-            }),
-            headers: {
-                'Content-Type': 'application/json'
+        try {
+            const { error: submitError } = await elements.submit()
+            if (submitError) {
+                handleError(submitError)
+                return
             }
-        });
 
-        if (!res.ok) {
-            handleError(new Error('Failed to create payment intent'));
-            return;
-        }
+            const res = await fetch("api/create-intent", {
+                method: "POST",
+                body: JSON.stringify({
+                    amount: amount,
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
 
-        const clientSecret = await res.json(); // Extract JSON data only once
+            if (!res.ok) {
+                handleError(new Error('Failed to create payment intent'));
+                return;
+            }
 
-        console.log("res:", clientSecret); // Log the parsed JSON
+            const clientSecret = await res.json(); // Extract JSON data only once
 
-        if (res) {
-            handleAddOrder()
-            sendEmail()
-        }
+            console.log("res:", clientSecret); // Log the parsed JSON
 
-        const result = await stripe.confirmPayment({
-            clientSecret,
-            elements,
-            confirmParams: {
-                return_url: "http://localhost:3000/payment-confirm",
-            },
-        });
+            if (res) {
+                handleAddOrder()
+                sendEmail()
+            }
 
-        if (result.error) {
-            console.log(result.error.message);
-        } else {
-            console.log("Good Payment!")
-            localStorage.removeItem("totalPrice")
+            const result = await stripe.confirmPayment({
+                clientSecret,
+                elements,
+                confirmParams: {
+                    return_url: "http://localhost:3000/payment-confirm",
+                },
+            });
+
+            if (result.error) {
+                console.log(result.error.message);
+            } else {
+                console.log("Good Payment!")
+                localStorage.removeItem("totalPrice")
+            }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -92,12 +107,15 @@ const CheckoutForm = ({ amount }) => {
             <form onSubmit={handleSubmit}>
                 <PaymentElement />
                 <button
-                    disabled={!stripe}
-                    className="block  mt-5 rounded bg-primary w-full px-5 py-3 text-sm text-gray-100 transition hover:bg-primary/80 disabled:bg-primary/30"
+                    disabled={!stripe || loading}
+                    className={`block mt-5 rounded bg-primary w-full px-5 py-3 text-sm text-gray-100 transition ${
+                        loading ? 'bg-primary/30' : 'hover:bg-primary/80'
+                    }`}
                 >
-                    Submit
+                    {loading ? 'Processing...' : 'Submit'}
                 </button>
             </form>
+            {errorMessage && <p className="text-red-500 mt-3">{errorMessage}</p>}
         </div>
     );
 };

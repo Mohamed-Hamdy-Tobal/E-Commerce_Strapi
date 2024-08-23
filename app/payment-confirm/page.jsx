@@ -4,7 +4,7 @@ import React from 'react'
 
 const page = () => {
     return (
-        <div className="grid h-screen place-content-center bg-white px-4">
+        <div className="grid place-content-center bg-white px-4 py-10">
             <div className="text-center">
                 <Image src={'/imgs/mail-send.png'} width={640} height={530} alt='img'/>
 
