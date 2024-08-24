@@ -7,12 +7,16 @@ import { BreadCrump } from '@/components/ui/BreadCrump';
 import { ProductBanner } from './ProductBanner';
 import { ProductInfo } from './ProductInfo';
 import { ProductFilterCategories } from './ProductFilterCategories';
+import { FaCheckCircle } from 'react-icons/fa';
+
 
 const ProductDetailsSection = ({ productId }) => {
 
     const { product, loading, error } = useProductById(productId);
 
-    // console.log('product', product)
+
+    const whatIncludedPro = product?.attributes?.whatIncluded
+    console.log('whatIncluded', whatIncludedPro)
 
     if (loading) return <LoadingSpinner />;
     if (error) return <div>Error in product</div>;
@@ -33,7 +37,19 @@ const ProductDetailsSection = ({ productId }) => {
                     whatIncluded={product?.attributes?.whatIncluded}
                 />
             </div>
-            <ProductFilterCategories category={product?.attributes?.Category}/>
+
+            {whatIncludedPro && <div className='flex flex-col gap-3 mb-3 mt-[50px]'>
+                {
+                    whatIncludedPro.map((item, idx) => (
+                        <span key={idx} className='text-[20px] text-[#777] flex items-center gap-2'>
+                            <FaCheckCircle className='text-green-500' />
+                            {item.children[0].text}
+                        </span>
+                    ))
+                }
+            </div>}
+
+            <ProductFilterCategories category={product?.attributes?.Category} />
         </div>
     )
 }
