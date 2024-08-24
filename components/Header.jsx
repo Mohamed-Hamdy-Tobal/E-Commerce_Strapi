@@ -41,7 +41,7 @@ const Header = () => {
                     </Link>
 
                     <div className="flex flex-1 items-center justify-end md:justify-between">
-                        <nav aria-label="Global" className="">
+                        <nav aria-label="Global" className="flex flex-1 justify-center items-center md:block md:flex-grow-0">
                             <ul className="flex items-center gap-6 text-sm">
                                 <li>
                                     <Link className="text-gray-500 transition hover:text-gray-500/75" href="/"> Home </Link>
