@@ -17,7 +17,6 @@ export async function POST() {
     console.log("SEND EMAIL!")
 
     console.log(process.env.RESEND_API_KEY)
-    
 
     try {
         const { data, error } = await resend.emails.send({
