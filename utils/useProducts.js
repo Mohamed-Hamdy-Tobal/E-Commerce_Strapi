@@ -10,6 +10,7 @@ const useProducts = () => {
         const fetchProducts = async () => {
             try {
                 const response = await api.get("/api/products?populate=*");
+                console.log("response of products !", response)
                 setProducts(response.data.data);
             } catch (err) {
                 setError(err);
