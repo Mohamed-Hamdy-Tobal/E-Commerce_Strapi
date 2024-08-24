@@ -16,7 +16,7 @@ const Header = () => {
     const pathname = usePathname()
 
     // Check if the current route is sign-in or sign-up
-    if ((pathname === '/sign-in' || pathname === '/sign-up') && !user.isSignedIn) {
+    if ((pathname === '/sign-in' || pathname === '/sign-up' || pathname === '/sign-up/verify-email-address') && !user.isSignedIn) {
         return null
     }
 

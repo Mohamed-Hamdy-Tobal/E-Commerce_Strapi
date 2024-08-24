@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const AuthForm = ({children}) => {
+export const AuthForm = ({ children }) => {
     return (
         <section className="bg-white">
             <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
@@ -12,7 +12,7 @@ export const AuthForm = ({children}) => {
                     />
 
                     <div className="hidden lg:relative lg:block lg:p-12">
-                        <a className="block text-white" href="#">
+                        <span className="block text-white">
                             <span className="sr-only">Home</span>
                             <svg
                                 className="h-8 sm:h-10"
@@ -25,15 +25,14 @@ export const AuthForm = ({children}) => {
                                     fill="currentColor"
                                 />
                             </svg>
-                        </a>
+                        </span>
 
                         <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
-                            Welcome to Squid 🦑
+                            Welcome to Our E-Commerce
                         </h2>
 
                         <p className="mt-4 leading-relaxed text-white/90">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam dolorum aliquam,
-                            quibusdam aperiam voluptatum.
+                            Explore our premium courses and elevate your skills. Choose from a wide range of expertly crafted classes, designed to help you succeed. Start learning today!
                         </p>
                     </div>
                 </section>
@@ -62,12 +61,11 @@ export const AuthForm = ({children}) => {
                             </a>
 
                             <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-                                Welcome to Squid 🦑
+                                Welcome to Our E-Commerce
                             </h1>
 
-                            <p className="mt-4 leading-relaxed text-gray-500">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam dolorum aliquam,
-                                quibusdam aperiam voluptatum.
+                            <p className="my-4 leading-relaxed text-gray-500">
+                                Explore our premium courses and elevate your skills. Choose from a wide range of expertly crafted classes, designed to help you succeed. Start learning today!
                             </p>
                         </div>
 
