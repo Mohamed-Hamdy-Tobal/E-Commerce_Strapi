@@ -1,17 +1,25 @@
 "use client";
 
 import useProducts from '@/utils/useProducts';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ProductsList } from './ProductsList'
 import LoadingSpinner from '../Loading/LoadingSpinner';
-import { FiArrowRight } from 'react-icons/fi';
-import Link from 'next/link';
+import { Filtration } from './Filtration';
 
 const ProductsSection = () => {
 
     const { products, loading, error } = useProducts();
 
-    console.log('products', products)
+    // console.log('products', products)
+    
+    const [mainProducts, setProducts] = useState([])
+    console.log('mainProducts ProductsSection', mainProducts)
+
+    useEffect(() => {
+        if (products) {
+            setProducts(products)
+        }
+    }, [products])
 
     if (loading) return <LoadingSpinner full/>;
     if (error) return <div>Error in products</div>;
@@ -19,13 +27,9 @@ const ProductsSection = () => {
     return (
         <div className='py-10'>
             <div className="flex justify-between items-center mt-4 mb-8">
-                <h1 className='text-xl font-bold'>Brand New</h1>
-                <Link href='/' className='text-lg text-primary underline flex gap-1 items-center'>
-                    <span>View All Collections</span>
-                    <FiArrowRight className="ml-2" />
-                </Link>
+                <Filtration products={products} setProducts={setProducts}/>
             </div>
-            <ProductsList products={products} />
+            <ProductsList products={mainProducts} />
         </div>
     )
 }
